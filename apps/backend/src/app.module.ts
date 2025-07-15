@@ -8,9 +8,16 @@ import { User } from './user/user.entity';
 import { Strategy } from './strategy/strategy.entity';
 import { StrategyModule } from './strategy/strategy.module';
 import { DhanModule } from './dhan/dhan.module';
+import { WebhookModule } from './webhook/webhook.module';
+import { OrderModule } from './order/order.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+      load: [],
+    }),
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: 'localhost',
@@ -25,6 +32,8 @@ import { DhanModule } from './dhan/dhan.module';
     AuthModule,
     StrategyModule,
     DhanModule,
+    WebhookModule,
+    OrderModule,
   ],
   controllers: [AppController],
   providers: [AppService],
