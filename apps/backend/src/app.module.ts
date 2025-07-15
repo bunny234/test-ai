@@ -6,11 +6,13 @@ import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { User } from './user/user.entity';
 import { Strategy } from './strategy/strategy.entity';
+import { Trade } from './trade/trade.entity';
 import { StrategyModule } from './strategy/strategy.module';
 import { DhanModule } from './dhan/dhan.module';
 import { WebhookModule } from './webhook/webhook.module';
 import { OrderModule } from './order/order.module';
 import { ConfigModule } from '@nestjs/config';
+import { TradeModule } from './trade/trade.module';
 
 @Module({
   imports: [
@@ -25,7 +27,7 @@ import { ConfigModule } from '@nestjs/config';
       username: 'user',
       password: 'password',
       database: 'mydatabase',
-      entities: [User, Strategy],
+      entities: [User, Strategy, Trade],
       synchronize: true,
     }),
     UserModule,
@@ -34,6 +36,7 @@ import { ConfigModule } from '@nestjs/config';
     DhanModule,
     WebhookModule,
     OrderModule,
+    TradeModule,
   ],
   controllers: [AppController],
   providers: [AppService],
