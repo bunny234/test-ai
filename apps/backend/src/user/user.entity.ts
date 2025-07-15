@@ -12,6 +12,12 @@ export class User {
   id: number;
 
   @Column({ unique: true })
+  email: string;
+
+  @Column({ nullable: true })
+  telegramChatId: string;
+
+  @Column({ unique: true })
   username: string;
 
   @Column()

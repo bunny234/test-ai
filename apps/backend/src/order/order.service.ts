@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { Strategy } from '../strategy/strategy.entity';
 import { DhanService } from '../dhan/dhan.service';
 import { UserService } from 'src/user/user.service';
+import { NotificationsService } from '../notifications/notifications.service';
 
 @Injectable()
 export class OrderService {
@@ -14,6 +15,7 @@ export class OrderService {
     private readonly strategyRepository: Repository<Strategy>,
     private readonly dhanService: DhanService,
     private readonly userService: UserService,
+    private readonly notificationsService: NotificationsService,
   ) {}
 
   async placeOrderFromWebhook(data: {
@@ -56,9 +58,19 @@ export class OrderService {
       this.logger.log(`Placing order with Dhan: ${JSON.stringify(orderDetails)}`);
       const orderResponse = await this.dhanService.placeOrder(user, orderDetails);
       this.logger.log(`Order placed successfully: ${JSON.stringify(orderResponse)}`);
+      const message = `Order placed successfully for ${strategy.symbol}: ${data.action} ${quantity} @ ${orderDetails.price}`;
+      await this.notificationsService.sendEmail(user.email, 'Trade Executed', message);
+      if (user.telegramChatId) {
+        await this.notificationsService.sendTelegramMessage(user.telegramChatId, message);
+      }
       return orderResponse;
     } catch (error) {
       this.logger.error(`Failed to place order: ${error.message}`, error.stack);
+      const message = `Failed to place order for ${strategy.symbol}: ${data.action} ${quantity}. Reason: ${error.message}`;
+      await this.notificationsService.sendEmail(user.email, 'Trade Failed', message);
+      if (user.telegramChatId) {
+        await this.notificationsService.sendTelegramMessage(user.telegramChatId, message);
+      }
       throw error;
     }
   }
