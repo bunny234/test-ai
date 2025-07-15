@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { Strategy } from '../strategy/strategy.entity';
 
 export enum UserRole {
   ADMIN = 'admin',
@@ -22,4 +23,10 @@ export class User {
     default: UserRole.TRADER,
   })
   role: UserRole;
+
+  @Column({ nullable: true })
+  dhan_access_token: string;
+
+  @OneToMany(() => Strategy, strategy => strategy.user)
+  strategies: Strategy[];
 }

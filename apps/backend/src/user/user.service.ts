@@ -21,4 +21,8 @@ export class UserService {
   async findOne(username: string): Promise<User | undefined> {
     return this.userRepository.findOne({ where: { username } });
   }
+
+  async updateUser(user: User): Promise<User> {
+    return this.userRepository.save(user);
+  }
 }

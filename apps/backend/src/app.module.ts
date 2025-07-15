@@ -5,6 +5,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { User } from './user/user.entity';
+import { Strategy } from './strategy/strategy.entity';
+import { StrategyModule } from './strategy/strategy.module';
+import { DhanModule } from './dhan/dhan.module';
 
 @Module({
   imports: [
@@ -15,11 +18,13 @@ import { User } from './user/user.entity';
       username: 'user',
       password: 'password',
       database: 'mydatabase',
-      entities: [User],
+      entities: [User, Strategy],
       synchronize: true,
     }),
     UserModule,
     AuthModule,
+    StrategyModule,
+    DhanModule,
   ],
   controllers: [AppController],
   providers: [AppService],
