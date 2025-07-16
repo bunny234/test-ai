@@ -1,6 +1,20 @@
 import React from 'react';
 
-const StrategyList = ({ strategies, deleteStrategy, editStrategy }) => {
+interface Strategy {
+  id?: number;
+  symbol: string;
+  condition: string;
+  quantity: string;
+  risk: string;
+}
+
+interface StrategyListProps {
+  strategies: Strategy[];
+  deleteStrategy: (id: number) => void;
+  editStrategy: (strategy: Strategy) => void;
+}
+
+const StrategyList: React.FC<StrategyListProps> = ({ strategies, deleteStrategy, editStrategy }) => {
   return (
     <div>
       <h2>Strategies</h2>
@@ -12,7 +26,7 @@ const StrategyList = ({ strategies, deleteStrategy, editStrategy }) => {
             <p><strong>Quantity:</strong> {strategy.quantity}</p>
             <p><strong>Risk Limit:</strong> {strategy.risk}</p>
             <button onClick={() => editStrategy(strategy)}>Edit</button>
-            <button onClick={() => deleteStrategy(strategy.id)}>Delete</button>
+            <button onClick={() => strategy.id && deleteStrategy(strategy.id)}>Delete</button>
           </li>
         ))}
       </ul>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Position } from '../services/api';
+import type { Position } from '../services/api';
 
 interface Props {
   positions: Position[];

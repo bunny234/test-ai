@@ -1,5 +1,5 @@
 import React from 'react';
-import { Pnl } from '../services/api';
+import type { Pnl } from '../services/api';
 
 interface Props {
   pnl: Pnl | null;

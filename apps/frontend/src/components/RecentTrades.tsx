@@ -1,5 +1,5 @@
 import React from 'react';
-import { Trade } from '../services/api';
+import type { Trade } from '../services/api';
 
 interface Props {
   trades: Trade[];

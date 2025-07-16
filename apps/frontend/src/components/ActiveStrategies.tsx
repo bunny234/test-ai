@@ -1,5 +1,5 @@
 import React from 'react';
-import { Strategy } from '../services/api';
+import type { Strategy } from '../services/api';
 
 interface Props {
   strategies: Strategy[];

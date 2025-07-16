@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { getActiveStrategies, getRecentTrades, getTotalPnl, getOpenPositions, Strategy, Trade, Pnl, Position } from '../services/api';
+import { getActiveStrategies, getRecentTrades, getTotalPnl, getOpenPositions } from '../services/api';
+import type { Strategy, Trade, Pnl, Position } from '../services/api';
 import Chart from './Chart';
 import ActiveStrategies from './ActiveStrategies';
 import RecentTrades from './RecentTrades';

@@ -1,7 +1,22 @@
 import React, { useState, useEffect } from 'react';
 
-const StrategyForm = ({ addStrategy, editing, updateStrategy, setEditing }) => {
-  const [strategy, setStrategy] = useState({
+interface Strategy {
+  id?: number;
+  symbol: string;
+  condition: string;
+  quantity: string;
+  risk: string;
+}
+
+interface StrategyFormProps {
+  addStrategy: (strategy: Strategy) => void;
+  editing: Strategy | null;
+  updateStrategy: (strategy: Strategy) => void;
+  setEditing: (strategy: Strategy | null) => void;
+}
+
+const StrategyForm: React.FC<StrategyFormProps> = ({ addStrategy, editing, updateStrategy, setEditing }) => {
+  const [strategy, setStrategy] = useState<Strategy>({
     symbol: '',
     condition: '',
     quantity: '',
@@ -21,7 +36,7 @@ const StrategyForm = ({ addStrategy, editing, updateStrategy, setEditing }) => {
     }
   }, [editing]);
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setStrategy(prevState => ({
       ...prevState,
@@ -29,13 +44,13 @@ const StrategyForm = ({ addStrategy, editing, updateStrategy, setEditing }) => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!strategy.symbol || !strategy.condition || !strategy.quantity || !strategy.risk) return;
     if (editing) {
       updateStrategy(strategy);
     } else {
-      addStrategy(strategy);
+      addStrategy({ ...strategy, id: Date.now() });
     }
     setStrategy({
       symbol: '',

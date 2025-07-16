@@ -1,12 +1,43 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import Login from './components/Login';
 import Signup from './components/Signup';
 import Dashboard from './components/Dashboard';
 import ProtectedRoute from './components/ProtectedRoute';
+import StrategyForm from './components/StrategyForm';
+import StrategyList from './components/StrategyList';
 import './App.css';
 
+interface Strategy {
+  id?: number;
+  symbol: string;
+  condition: string;
+  quantity: string;
+  risk: string;
+}
+
 const App: React.FC = () => {
+  const [strategies, setStrategies] = useState<Strategy[]>([]);
+  const [editing, setEditing] = useState<Strategy | null>(null);
+
+  const addStrategy = (strategy: Omit<Strategy, 'id'>) => {
+    const newStrategy = { ...strategy, id: Date.now() };
+    setStrategies([...strategies, newStrategy]);
+  };
+
+  const updateStrategy = (updatedStrategy: Strategy) => {
+    setStrategies(strategies.map(strategy => (strategy.id === updatedStrategy.id ? updatedStrategy : strategy)));
+    setEditing(null);
+  };
+
+  const deleteStrategy = (id: number) => {
+    setStrategies(strategies.filter(strategy => strategy.id !== id));
+  };
+
+  const editStrategy = (strategy: Strategy) => {
+    setEditing(strategy);
+  };
+
   return (
     <Router>
       <div>
@@ -18,6 +49,9 @@ const App: React.FC = () => {
             <li>
               <Link to="/signup">Signup</Link>
             </li>
+            <li>
+              <Link to="/strategies">Strategies</Link>
+            </li>
           </ul>
         </nav>
         <Routes>
@@ -28,6 +62,22 @@ const App: React.FC = () => {
             element={
               <ProtectedRoute>
                 <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/strategies"
+            element={
+              <ProtectedRoute>
+                <>
+                  <StrategyList strategies={strategies} deleteStrategy={deleteStrategy} editStrategy={editStrategy} />
+                  <StrategyForm
+                    addStrategy={addStrategy}
+                    editing={editing}
+                    updateStrategy={updateStrategy}
+                    setEditing={setEditing}
+                  />
+                </>
               </ProtectedRoute>
             }
           />
