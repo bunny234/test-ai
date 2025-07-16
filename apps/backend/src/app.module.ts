@@ -17,9 +17,11 @@ import { NotificationsModule } from './notifications/notifications.module';
 import { BullModule } from '@nestjs/bullmq';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { APP_GUARD } from '@nestjs/core';
+import { BacktestModule } from './backtest/backtest.module';
 
 @Module({
   imports: [
+    BacktestModule,
     ThrottlerModule.forRoot([
       {
         ttl: 60,
