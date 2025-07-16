@@ -1,33 +1,31 @@
+import { BullModule } from '@nestjs/bullmq';
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
+import { APP_GUARD } from '@nestjs/core';
+import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
-import { User } from './user/user.entity';
-import { Strategy } from './strategy/strategy.entity';
-import { Trade } from './trade/trade.entity';
-import { StrategyModule } from './strategy/strategy.module';
-import { DhanModule } from './dhan/dhan.module';
-import { WebhookModule } from './webhook/webhook.module';
-import { OrderModule } from './order/order.module';
-import { ConfigModule } from '@nestjs/config';
-import { TradeModule } from './trade/trade.module';
-import { NotificationsModule } from './notifications/notifications.module';
-import { BullModule } from '@nestjs/bullmq';
-import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
-import { APP_GUARD } from '@nestjs/core';
 import { BacktestModule } from './backtest/backtest.module';
+import { DhanModule } from './dhan/dhan.module';
+import { NotificationsModule } from './notifications/notifications.module';
+import { OrderModule } from './order/order.module';
+import { Strategy } from './strategy/strategy.entity';
+import { StrategyModule } from './strategy/strategy.module';
+import { Trade } from './trade/trade.entity';
+import { TradeModule } from './trade/trade.module';
+import { User } from './user/user.entity';
+import { UserModule } from './user/user.module';
+import { WebhookModule } from './webhook/webhook.module';
 
 @Module({
   imports: [
     BacktestModule,
-    ThrottlerModule.forRoot([
-      {
-        ttl: 60,
-        limit: 10,
-      },
-    ]),
+    ThrottlerModule.forRoot({
+      ttl: 60,
+      limit: 10,
+    }),
     BullModule.forRoot({
       connection: {
         host: 'localhost',
