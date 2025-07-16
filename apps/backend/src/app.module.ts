@@ -15,9 +15,17 @@ import { ConfigModule } from '@nestjs/config';
 import { TradeModule } from './trade/trade.module';
 import { NotificationsModule } from './notifications/notifications.module';
 import { BullModule } from '@nestjs/bullmq';
+import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
+import { APP_GUARD } from '@nestjs/core';
 
 @Module({
   imports: [
+    ThrottlerModule.forRoot([
+      {
+        ttl: 60,
+        limit: 10,
+      },
+    ]),
     BullModule.forRoot({
       connection: {
         host: 'localhost',
@@ -57,6 +65,12 @@ import { BullModule } from '@nestjs/bullmq';
     TradeModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_GUARD,
+      useClass: ThrottlerGuard,
+    },
+  ],
 })
 export class AppModule {}

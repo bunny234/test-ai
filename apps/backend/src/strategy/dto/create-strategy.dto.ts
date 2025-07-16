@@ -8,4 +8,16 @@ export class CreateStrategyDto {
   @IsString()
   @IsNotEmpty()
   description: string;
+
+  @IsString()
+  @IsNotEmpty()
+  instrument: string;
+
+  @IsString()
+  @IsNotEmpty()
+  timeframe: string;
+
+  @IsString()
+  @IsNotEmpty()
+  indicator: string;
 }
