@@ -1,6 +1,7 @@
 import { IsArray, IsNotEmpty, IsObject, IsString } from 'class-validator';
+import { Strategy } from '../interfaces/backtest.interfaces';
 
-class OhlcData {
+export class OhlcData {
   @IsNotEmpty()
   timestamp: Date;
 
@@ -24,7 +25,7 @@ export class CreateBacktestDto {
 
   @IsObject()
   @IsNotEmpty()
-  strategy: object;
+  strategy: Strategy;
 
   @IsString()
   @IsNotEmpty()

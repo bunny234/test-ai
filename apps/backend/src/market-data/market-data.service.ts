@@ -1,11 +1,15 @@
 import { Injectable, OnModuleInit } from '@nestjs/common';
 import * as WebSocket from 'ws';
 import { Observable, Subject } from 'rxjs';
+import {
+  MarketData,
+  Subscription,
+} from './interfaces/market-data.interfaces';
 
 @Injectable()
 export class MarketDataService implements OnModuleInit {
   private ws: WebSocket;
-  private readonly marketDataSubject = new Subject<any>();
+  private readonly marketDataSubject = new Subject<MarketData>();
   private instruments: string[] = [];
 
   // Hardcoded for now, should be fetched from user service
@@ -46,7 +50,7 @@ export class MarketDataService implements OnModuleInit {
 
   subscribe(instruments: string[]) {
     this.instruments = [...new Set([...this.instruments, ...instruments])];
-    const subscription = {
+    const subscription: Subscription = {
       action: 'subscribe',
       instruments: this.instruments.map((instrument) => ({
         exchange: 'NSE_EQ',
@@ -60,7 +64,7 @@ export class MarketDataService implements OnModuleInit {
     this.instruments = this.instruments.filter(
       (instrument) => !instruments.includes(instrument),
     );
-    const subscription = {
+    const subscription: Subscription = {
       action: 'unsubscribe',
       instruments: instruments.map((instrument) => ({
         exchange: 'NSE_EQ',
@@ -70,7 +74,7 @@ export class MarketDataService implements OnModuleInit {
     this.ws.send(JSON.stringify(subscription));
   }
 
-  getMarketData(): Observable<any> {
+  getMarketData(): Observable<MarketData> {
     return this.marketDataSubject.asObservable();
   }
 }

@@ -1,11 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { CreateBacktestDto } from './dto/create-backtest.dto';
+import {
+  BacktestResult,
+  Trade,
+  Strategy,
+} from './interfaces/backtest.interfaces';
+import { OhlcData } from './dto/create-backtest.dto';
 
 @Injectable()
 export class BacktestService {
-  runBacktest(createBacktestDto: CreateBacktestDto) {
+  runBacktest(createBacktestDto: CreateBacktestDto): BacktestResult {
     const { historicalData, strategy } = createBacktestDto;
-    const trades: any[] = [];
+    const trades: Trade[] = [];
     let equity = 100000; // Starting equity
     const equityCurve = [equity];
     let peakEquity = equity;
@@ -20,7 +26,7 @@ export class BacktestService {
       const shouldSell = this.shouldSell(strategy, currentPrice, previousPrice);
 
       if (shouldBuy) {
-        const trade = {
+        const trade: Trade = {
           entryPrice: currentPrice.close,
           exitPrice: null,
           timestamp: currentPrice.timestamp,
@@ -56,26 +62,26 @@ export class BacktestService {
   }
 
   private shouldBuy(
-    strategy: any,
-    currentPrice: any,
-    previousPrice: any,
+    strategy: Strategy,
+    currentPrice: OhlcData,
+    previousPrice: OhlcData,
   ): boolean {
     // Implement strategy-specific buy logic here
     // This is a placeholder
-    return currentPrice.close > previousPrice.close;
+    return strategy.buyCondition(currentPrice, previousPrice);
   }
 
   private shouldSell(
-    strategy: any,
-    currentPrice: any,
-    previousPrice: any,
+    strategy: Strategy,
+    currentPrice: OhlcData,
+    previousPrice: OhlcData,
   ): boolean {
     // Implement strategy-specific sell logic here
     // This is a placeholder
-    return currentPrice.close < previousPrice.close;
+    return strategy.sellCondition(currentPrice, previousPrice);
   }
 
-  private calculateWinRate(trades: any[]): number {
+  private calculateWinRate(trades: Trade[]): number {
     const closedTrades = trades.filter((trade) => trade.exitPrice !== null);
     if (closedTrades.length === 0) {
       return 0;
