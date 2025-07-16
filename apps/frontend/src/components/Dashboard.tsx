@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getActiveStrategies, getRecentTrades, getTotalPnl, getOpenPositions } from '../services/api';
+import { getActiveStrategies, getRecentTrades, getTotalPnl, getOpenPositions, setDhanAccessToken } from '../services/api';
 import type { Strategy, Trade, Pnl, Position } from '../services/api';
 import Chart from './Chart';
 import ActiveStrategies from './ActiveStrategies';
@@ -41,9 +41,20 @@ const Dashboard: React.FC = () => {
     fetchData();
   };
 
+  const handleSetToken = async () => {
+    try {
+      await setDhanAccessToken({ accessToken: 'my-dummy-token' });
+      alert('Dhan token set successfully!');
+    } catch (error) {
+      console.error('Error setting Dhan token:', error);
+      alert('Failed to set Dhan token.');
+    }
+  };
+
   return (
     <div>
       <h2>Dashboard</h2>
+      <button onClick={handleSetToken}>Set Dhan Token</button>
       <div>
         <input
           type="text"
