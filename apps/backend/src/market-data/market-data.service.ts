@@ -1,10 +1,7 @@
 import { Injectable, OnModuleInit } from '@nestjs/common';
 import * as WebSocket from 'ws';
 import { Observable, Subject } from 'rxjs';
-import {
-  MarketData,
-  Subscription,
-} from './interfaces/market-data.interfaces';
+import { MarketData, Subscription } from './interfaces/market-data.interfaces';
 
 @Injectable()
 export class MarketDataService implements OnModuleInit {

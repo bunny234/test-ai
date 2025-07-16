@@ -1,11 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { CreateBacktestDto } from './dto/create-backtest.dto';
+import { CreateBacktestDto, OhlcData } from './dto/create-backtest.dto';
 import {
   BacktestResult,
-  Trade,
   Strategy,
+  Trade,
 } from './interfaces/backtest.interfaces';
-import { OhlcData } from './dto/create-backtest.dto';
 
 @Injectable()
 export class BacktestService {
@@ -87,7 +86,7 @@ export class BacktestService {
       return 0;
     }
     const winningTrades = closedTrades.filter(
-      (trade) => trade.exitPrice > trade.entryPrice,
+      (trade) => trade.exitPrice! > trade.entryPrice,
     );
     return (winningTrades.length / closedTrades.length) * 100;
   }
