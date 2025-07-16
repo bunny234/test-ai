@@ -3,7 +3,6 @@ import {
   Post,
   Body,
   UseGuards,
-  Request,
   Patch,
   Param,
   Delete,
@@ -11,6 +10,7 @@ import {
 import { DhanService } from './dhan.service';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { User } from '../user/user.entity';
+import { GetUser } from '../auth/user.decorator';
 import { SetDhanTokenDto } from './dto/set-dhan-token.dto';
 import { PlaceOrderDto } from './dto/place-order.dto';
 import { ModifyOrderDto } from './dto/modify-order.dto';
@@ -21,26 +21,26 @@ export class DhanController {
   constructor(private readonly dhanService: DhanService) {}
 
   @Post('set-token')
-  setDhanAccessToken(@Body() setDhanTokenDto: SetDhanTokenDto, @Request() req) {
-    return this.dhanService.setDhanAccessToken(req.user as User, setDhanTokenDto.accessToken);
+  setDhanAccessToken(@Body() setDhanTokenDto: SetDhanTokenDto, @GetUser() user: User) {
+    return this.dhanService.setDhanAccessToken(user, setDhanTokenDto.accessToken);
   }
 
   @Post('orders')
-  placeOrder(@Body() placeOrderDto: PlaceOrderDto, @Request() req) {
-    return this.dhanService.placeOrder(req.user as User, placeOrderDto);
+  placeOrder(@Body() placeOrderDto: PlaceOrderDto, @GetUser() user: User) {
+    return this.dhanService.placeOrder(user, placeOrderDto);
   }
 
   @Patch('orders/:id')
   modifyOrder(
     @Param('id') id: string,
     @Body() modifyOrderDto: ModifyOrderDto,
-    @Request() req,
+    @GetUser() user: User,
   ) {
-    return this.dhanService.modifyOrder(req.user as User, id, modifyOrderDto);
+    return this.dhanService.modifyOrder(user, id, modifyOrderDto);
   }
 
   @Delete('orders/:id')
-  cancelOrder(@Param('id') id: string, @Request() req) {
-    return this.dhanService.cancelOrder(req.user as User, id);
+  cancelOrder(@Param('id') id: string, @GetUser() user: User) {
+    return this.dhanService.cancelOrder(user, id);
   }
 }

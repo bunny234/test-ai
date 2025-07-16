@@ -5,7 +5,7 @@ import { CreateBacktestDto } from './dto/create-backtest.dto';
 export class BacktestService {
   runBacktest(createBacktestDto: CreateBacktestDto) {
     const { historicalData, strategy } = createBacktestDto;
-    const trades = [];
+    const trades: any[] = [];
     let equity = 100000; // Starting equity
     const equityCurve = [equity];
     let peakEquity = equity;
@@ -68,9 +68,13 @@ export class BacktestService {
   }
 
   private calculateWinRate(trades: any[]): number {
-    const winningTrades = trades.filter(
+    const closedTrades = trades.filter((trade) => trade.exitPrice !== null);
+    if (closedTrades.length === 0) {
+      return 0;
+    }
+    const winningTrades = closedTrades.filter(
       (trade) => trade.exitPrice > trade.entryPrice,
     );
-    return (winningTrades.length / trades.length) * 100;
+    return (winningTrades.length / closedTrades.length) * 100;
   }
 }

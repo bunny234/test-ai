@@ -7,6 +7,9 @@ import axios from 'axios';
 jest.mock('nodemailer');
 jest.mock('axios');
 
+const sendMail = jest.fn().mockResolvedValue(true);
+(nodemailer.createTransport as jest.Mock).mockReturnValue({ sendMail });
+
 describe('NotificationsService', () => {
   let service: NotificationsService;
   let configService: ConfigService;
@@ -42,9 +45,6 @@ describe('NotificationsService', () => {
 
   describe('sendEmail', () => {
     it('should send an email', async () => {
-      const sendMail = jest.fn().mockResolvedValue(true);
-      (nodemailer.createTransport as jest.Mock).mockReturnValue({ sendMail });
-
       await service.sendEmail('to@example.com', 'Test', 'Test');
 
       expect(nodemailer.createTransport).toHaveBeenCalledWith({
