@@ -21,8 +21,14 @@ export class DhanController {
   constructor(private readonly dhanService: DhanService) {}
 
   @Post('set-token')
-  setDhanAccessToken(@Body() setDhanTokenDto: SetDhanTokenDto, @GetUser() user: User) {
-    return this.dhanService.setDhanAccessToken(user, setDhanTokenDto.accessToken);
+  setDhanAccessToken(
+    @Body() setDhanTokenDto: SetDhanTokenDto,
+    @GetUser() user: User,
+  ) {
+    return this.dhanService.setDhanAccessToken(
+      user,
+      setDhanTokenDto.accessToken,
+    );
   }
 
   @Post('orders')

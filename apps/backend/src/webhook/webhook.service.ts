@@ -27,7 +27,10 @@ export class WebhookService {
         quantity,
       });
     } catch (error) {
-      this.logger.error(`Failed to process webhook: ${error.message}`, error.stack);
+      this.logger.error(
+        `Failed to process webhook: ${error.message}`,
+        error.stack,
+      );
     }
   }
 }

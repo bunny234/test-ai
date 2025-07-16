@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = '/api'; // Assuming the backend is served under /api
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '/api';
 
 // Define interfaces for the data
 export interface Strategy {

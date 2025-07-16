@@ -22,10 +22,34 @@ describe('BacktestService', () => {
       const createBacktestDto: CreateBacktestDto = {
         strategyId: 'test-strategy',
         historicalData: [
-          { timestamp: new Date('2023-01-01'), open: 100, high: 105, low: 99, close: 100 },
-          { timestamp: new Date('2023-01-02'), open: 100, high: 108, low: 100, close: 105 }, // Buy
-          { timestamp: new Date('2023-01-03'), open: 105, high: 110, low: 104, close: 110 }, // Sell (win)
-          { timestamp: new Date('2023-01-04'), open: 110, high: 112, low: 108, close: 105 }, // Sell (loss)
+          {
+            timestamp: new Date('2023-01-01'),
+            open: 100,
+            high: 105,
+            low: 99,
+            close: 100,
+          },
+          {
+            timestamp: new Date('2023-01-02'),
+            open: 100,
+            high: 108,
+            low: 100,
+            close: 105,
+          }, // Buy
+          {
+            timestamp: new Date('2023-01-03'),
+            open: 105,
+            high: 110,
+            low: 104,
+            close: 110,
+          }, // Sell (win)
+          {
+            timestamp: new Date('2023-01-04'),
+            open: 110,
+            high: 112,
+            low: 108,
+            close: 105,
+          }, // Sell (loss)
         ],
         strategy: {},
       };

@@ -55,13 +55,21 @@ export class BacktestService {
     };
   }
 
-  private shouldBuy(strategy: any, currentPrice: any, previousPrice: any): boolean {
+  private shouldBuy(
+    strategy: any,
+    currentPrice: any,
+    previousPrice: any,
+  ): boolean {
     // Implement strategy-specific buy logic here
     // This is a placeholder
     return currentPrice.close > previousPrice.close;
   }
 
-  private shouldSell(strategy: any, currentPrice: any, previousPrice: any): boolean {
+  private shouldSell(
+    strategy: any,
+    currentPrice: any,
+    previousPrice: any,
+  ): boolean {
     // Implement strategy-specific sell logic here
     // This is a placeholder
     return currentPrice.close < previousPrice.close;

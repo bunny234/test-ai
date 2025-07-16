@@ -1,12 +1,18 @@
-import { Controller, Post, Body, HttpCode, UnauthorizedException } from '@nestjs/common';
-import { WebhookService } from './webhook.service';
+import {
+  Body,
+  Controller,
+  HttpCode,
+  Post,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { Throttle } from '@nestjs/throttler';
+import { WebhookService } from './webhook.service';
 
 @Controller('webhook')
 export class WebhookController {
   constructor(private readonly webhookService: WebhookService) {}
 
-  @Throttle({ default: { limit: 20, ttl: 60000 } })
+  @Throttle(10, 60)
   @Post('tradingview')
   @HttpCode(200)
   async handleTradingViewWebhook(@Body() payload: any) {

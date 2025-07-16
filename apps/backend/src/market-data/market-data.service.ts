@@ -9,7 +9,8 @@ export class MarketDataService implements OnModuleInit {
   private instruments: string[] = [];
 
   // Hardcoded for now, should be fetched from user service
-  private readonly accessToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJkaGFuIiwicGFydG5lcklkIjoiIiwiZXhwIjoxNzE2OTk2MTg5LCJ0b2tlbkNvbnN1bWVyVHlwZSI6IlNFTEYiLCJ3ZWJzb2NrZXQiOnRydWUsInoiOiJZVFF5YVBRcyJ9.rrT5i_g3Vdx-4n1F6p3h5zOq-i-I_G3N8pW-i_g3N8pW-i_g3N8pW-i_g3N8pW-i_g3N8pW-i_g3N8pW-i_g';
+  private readonly accessToken =
+    'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJkaGFuIiwicGFydG5lcklkIjoiIiwiZXhwIjoxNzE2OTk2MTg5LCJ0b2tlbkNvbnN1bWVyVHlwZSI6IlNFTEYiLCJ3ZWJzb2NrZXQiOnRydWUsInoiOiJZVFF5YVBRcyJ9.rrT5i_g3Vdx-4n1F6p3h5zOq-i-I_G3N8pW-i_g3N8pW-i_g3N8pW-i_g3N8pW-i_g3N8pW-i_g3N8pW-i_g';
   private readonly clientId = '11000101';
 
   onModuleInit() {

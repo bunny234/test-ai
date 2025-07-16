@@ -13,7 +13,10 @@ export class StrategyService {
     private readonly strategyRepository: Repository<Strategy>,
   ) {}
 
-  async create(createStrategyDto: CreateStrategyDto, user: User): Promise<Strategy> {
+  async create(
+    createStrategyDto: CreateStrategyDto,
+    user: User,
+  ): Promise<Strategy> {
     const strategy = this.strategyRepository.create({
       ...createStrategyDto,
       user,
@@ -29,7 +32,11 @@ export class StrategyService {
     return this.strategyRepository.findOne({ where: { id, user } });
   }
 
-  async update(id: number, updateStrategyDto: UpdateStrategyDto, user: User): Promise<Strategy | null> {
+  async update(
+    id: number,
+    updateStrategyDto: UpdateStrategyDto,
+    user: User,
+  ): Promise<Strategy | null> {
     await this.strategyRepository.update({ id, user }, updateStrategyDto);
     return this.findOne(id, user);
   }

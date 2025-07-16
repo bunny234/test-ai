@@ -72,10 +72,13 @@ describe('NotificationsService', () => {
 
       await service.sendTelegramMessage('chatId', 'Test');
 
-      expect(post).toHaveBeenCalledWith('https://api.telegram.org/bottoken/sendMessage', {
-        chat_id: 'chatId',
-        text: 'Test',
-      });
+      expect(post).toHaveBeenCalledWith(
+        'https://api.telegram.org/bottoken/sendMessage',
+        {
+          chat_id: 'chatId',
+          text: 'Test',
+        },
+      );
     });
   });
 });

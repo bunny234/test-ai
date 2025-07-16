@@ -12,6 +12,6 @@ export class Strategy {
   @Column()
   description: string;
 
-  @ManyToOne(() => User, user => user.strategies)
+  @ManyToOne(() => User, (user) => user.strategies)
   user: User;
 }

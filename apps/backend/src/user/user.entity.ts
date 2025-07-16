@@ -33,6 +33,6 @@ export class User {
   @Column({ nullable: true })
   dhan_access_token: string;
 
-  @OneToMany(() => Strategy, strategy => strategy.user)
+  @OneToMany(() => Strategy, (strategy) => strategy.user)
   strategies: Strategy[];
 }

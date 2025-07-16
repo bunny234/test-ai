@@ -3,7 +3,10 @@ import { DhanService } from './dhan.service';
 import { UserService } from '../user/user.service';
 import { User } from '../user/user.entity';
 import axios from 'axios';
-import { PlaceOrderRequest, ModifyOrderRequest } from './interfaces/dhan.interfaces';
+import {
+  PlaceOrderRequest,
+  ModifyOrderRequest,
+} from './interfaces/dhan.interfaces';
 import { HttpException } from '@nestjs/common';
 
 jest.mock('axios');
@@ -77,16 +80,18 @@ describe('DhanService', () => {
     });
 
     it('should handle API errors', async () => {
-        const orderDetails: PlaceOrderRequest = {
-            securityId: '123',
-            transactionType: 'BUY',
-            quantity: 1,
-            orderType: 'MARKET',
-        };
-        const error = { response: { data: 'error', status: 400 } };
-        mockedAxios.post.mockRejectedValue(error);
+      const orderDetails: PlaceOrderRequest = {
+        securityId: '123',
+        transactionType: 'BUY',
+        quantity: 1,
+        orderType: 'MARKET',
+      };
+      const error = { response: { data: 'error', status: 400 } };
+      mockedAxios.post.mockRejectedValue(error);
 
-        await expect(service.placeOrder(mockUser, orderDetails)).rejects.toThrow(HttpException);
+      await expect(service.placeOrder(mockUser, orderDetails)).rejects.toThrow(
+        HttpException,
+      );
     });
   });
 

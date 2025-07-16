@@ -23,7 +23,9 @@ export class OrderProcessor extends WorkerHost {
   }
 
   async process(job: Job<any, any, string>): Promise<any> {
-    this.logger.log(`Processing job ${job.id} of type ${job.name} with data ${JSON.stringify(job.data)}`);
+    this.logger.log(
+      `Processing job ${job.id} of type ${job.name} with data ${JSON.stringify(job.data)}`,
+    );
     if (job.name === 'place-order') {
       await this.orderService.placeOrder(job.data);
     }
@@ -31,7 +33,10 @@ export class OrderProcessor extends WorkerHost {
 
   @OnWorkerEvent('failed')
   async onFailed(job: Job, error: Error) {
-    this.logger.error(`Job ${job.id} failed with error: ${error.message}`, error.stack);
+    this.logger.error(
+      `Job ${job.id} failed with error: ${error.message}`,
+      error.stack,
+    );
 
     const { data } = job;
     let strategy: Strategy | null = null;
@@ -56,9 +61,16 @@ export class OrderProcessor extends WorkerHost {
     const quantity = data.quantity || 1;
 
     const message = `Failed to place order for ${data.symbol}: ${data.action} ${quantity}. Reason: ${error.message}`;
-    await this.notificationsService.sendEmail(user.email, 'Trade Failed', message);
+    await this.notificationsService.sendEmail(
+      user.email,
+      'Trade Failed',
+      message,
+    );
     if (user.telegramChatId) {
-      await this.notificationsService.sendTelegramMessage(user.telegramChatId, message);
+      await this.notificationsService.sendTelegramMessage(
+        user.telegramChatId,
+        message,
+      );
     }
   }
 }

@@ -1,28 +1,28 @@
 import {
-  Controller,
-  Get,
-  Post,
   Body,
-  Patch,
-  Param,
+  Controller,
   Delete,
-  UseGuards,
-  Request,
+  Get,
   NotFoundException,
+  Param,
+  Patch,
+  Post,
+  Request,
+  UseGuards,
 } from '@nestjs/common';
-import { StrategyService } from './strategy.service';
-import { CreateStrategyDto } from './dto/create-strategy.dto';
-import { UpdateStrategyDto } from './dto/update-strategy.dto';
+import { Throttle } from '@nestjs/throttler';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { User } from '../user/user.entity';
-import { Throttle } from '@nestjs/throttler';
+import { CreateStrategyDto } from './dto/create-strategy.dto';
+import { UpdateStrategyDto } from './dto/update-strategy.dto';
+import { StrategyService } from './strategy.service';
 
 @Controller('strategies')
 @UseGuards(JwtAuthGuard)
 export class StrategyController {
   constructor(private readonly strategyService: StrategyService) {}
 
-  @Throttle({ default: { limit: 10, ttl: 60000 } })
+  @Throttle(10, 60)
   @Post()
   create(@Body() createStrategyDto: CreateStrategyDto, @Request() req) {
     return this.strategyService.create(createStrategyDto, req.user as User);
@@ -42,7 +42,7 @@ export class StrategyController {
     return strategy;
   }
 
-  @Throttle({ default: { limit: 10, ttl: 60000 } })
+  @Throttle(10, 60)
   @Patch(':id')
   async update(
     @Param('id') id: string,

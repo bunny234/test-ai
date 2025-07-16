@@ -1,12 +1,13 @@
+import { InjectQueue } from '@nestjs/bullmq';
 import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { Strategy } from '../strategy/strategy.entity';
-import { DhanService } from '../dhan/dhan.service';
-import { UserService } from '../user/user.service';
-import { NotificationsService } from '../notifications/notifications.service';
-import { InjectQueue } from '@nestjs/bullmq';
 import { Queue } from 'bullmq';
+import { PlaceOrderRequest } from 'src/dhan/interfaces/dhan.interfaces';
+import { Repository } from 'typeorm';
+import { DhanService } from '../dhan/dhan.service';
+import { NotificationsService } from '../notifications/notifications.service';
+import { Strategy } from '../strategy/strategy.entity';
+import { UserService } from '../user/user.service';
 
 @Injectable()
 export class OrderService {
@@ -76,10 +77,11 @@ export class OrderService {
     // Position sizing logic
     const quantity = data.quantity || 1; // Defaulting to 1 as strategy doesn't have quantity
 
-    const orderDetails = {
-      symbol: data.symbol,
-      exchange: 'NSE', // Or get from strategy
-      transactionType: data.action.toUpperCase(),
+    const orderType = data.action.toUpperCase() === 'BUY' ? 'BUY' : 'SELL';
+    const orderDetails: PlaceOrderRequest = {
+      securityId: data.symbol as string,
+      // exchange: 'NSE', // Or get from strategy
+      transactionType: orderType,
       orderType: 'MARKET', // Or get from strategy
       quantity,
       price: data.price || 0,

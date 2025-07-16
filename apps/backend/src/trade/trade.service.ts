@@ -32,20 +32,19 @@ export class TradeService {
     });
 
     const totalTrades = trades.length;
-    const winningTrades = trades.filter(t => t.pnl > 0).length;
-    const losingTrades = trades.filter(t => t.pnl < 0).length;
+    const winningTrades = trades.filter((t) => t.pnl > 0).length;
+    const losingTrades = trades.filter((t) => t.pnl < 0).length;
 
     const winRate = totalTrades > 0 ? (winningTrades / totalTrades) * 100 : 0;
 
     const totalProfit = trades
-      .filter(t => t.pnl > 0)
+      .filter((t) => t.pnl > 0)
       .reduce((sum, t) => sum + Number(t.pnl), 0);
     const totalLoss = trades
-      .filter(t => t.pnl < 0)
+      .filter((t) => t.pnl < 0)
       .reduce((sum, t) => sum + Number(t.pnl), 0);
 
-    const averageProfit =
-      winningTrades > 0 ? totalProfit / winningTrades : 0;
+    const averageProfit = winningTrades > 0 ? totalProfit / winningTrades : 0;
     const averageLoss = losingTrades > 0 ? totalLoss / losingTrades : 0;
 
     const strategyPerformance = {};
