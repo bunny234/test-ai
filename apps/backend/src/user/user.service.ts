@@ -18,8 +18,12 @@ export class UserService {
     return this.userRepository.save(newUser);
   }
 
-  async findOne(username: string): Promise<User | undefined> {
+  async findOne(username: string): Promise<User | null> {
     return this.userRepository.findOne({ where: { username } });
+  }
+
+  async findUserById(id: number): Promise<User | null> {
+    return this.userRepository.findOne({ where: { id } });
   }
 
   async updateUser(user: User): Promise<User> {

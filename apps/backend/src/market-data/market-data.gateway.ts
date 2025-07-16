@@ -49,7 +49,7 @@ export class MarketDataGateway
 
   @SubscribeMessage('unsubscribe')
   handleUnsubscribe(
-    @Message_body() payload: SubscribeDto,
+    @MessageBody() payload: SubscribeDto,
     @ConnectedSocket() client: Socket,
   ): void {
     this.marketDataService.unsubscribe(payload.symbols);

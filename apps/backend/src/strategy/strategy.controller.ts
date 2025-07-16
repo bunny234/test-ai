@@ -8,6 +8,7 @@ import {
   Delete,
   UseGuards,
   Request,
+  NotFoundException,
 } from '@nestjs/common';
 import { StrategyService } from './strategy.service';
 import { CreateStrategyDto } from './dto/create-strategy.dto';
@@ -31,17 +32,25 @@ export class StrategyController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string, @Request() req) {
-    return this.strategyService.findOne(+id, req.user as User);
+  async findOne(@Param('id') id: string, @Request() req) {
+    const strategy = await this.strategyService.findOne(+id, req.user as User);
+    if (!strategy) {
+      throw new NotFoundException('Strategy not found');
+    }
+    return strategy;
   }
 
   @Patch(':id')
-  update(
+  async update(
     @Param('id') id: string,
     @Body() updateStrategyDto: UpdateStrategyDto,
     @Request() req,
   ) {
-    return this.strategyService.update(+id, updateStrategyDto, req.user as User);
+    const strategy = await this.strategyService.update(+id, updateStrategyDto, req.user as User);
+    if (!strategy) {
+      throw new NotFoundException('Strategy not found');
+    }
+    return strategy;
   }
 
   @Delete(':id')

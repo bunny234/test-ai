@@ -25,11 +25,11 @@ export class StrategyService {
     return this.strategyRepository.find({ where: { user } });
   }
 
-  async findOne(id: number, user: User): Promise<Strategy> {
+  async findOne(id: number, user: User): Promise<Strategy | null> {
     return this.strategyRepository.findOne({ where: { id, user } });
   }
 
-  async update(id: number, updateStrategyDto: UpdateStrategyDto, user: User): Promise<Strategy> {
+  async update(id: number, updateStrategyDto: UpdateStrategyDto, user: User): Promise<Strategy | null> {
     await this.strategyRepository.update({ id, user }, updateStrategyDto);
     return this.findOne(id, user);
   }
