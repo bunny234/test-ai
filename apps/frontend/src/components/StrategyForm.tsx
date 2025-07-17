@@ -1,17 +1,25 @@
-import React, { useState, useEffect } from 'react';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import * as z from 'zod';
-import { Button } from '@/components/ui/Button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
-import { Input } from '@/components/ui/Input';
-import { Form, FormField, FormItem, FormLabel, FormControl, FormDescription, FormMessage } from '@/components/ui/Form';
+import React, { useState, useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import { Button } from "@/components/ui/Button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
+import { Input } from "@/components/ui/Input";
+import {
+  Form,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormControl,
+  FormDescription,
+  FormMessage,
+} from "@/components/ui/Form";
 
 const strategySchema = z.object({
-  symbol: z.string().min(1, { message: 'Symbol is required' }),
-  condition: z.string().min(1, { message: 'Condition is required' }),
-  quantity: z.string().min(1, { message: 'Quantity is required' }),
-  risk: z.string().min(1, { message: 'Risk is required' }),
+  symbol: z.string().min(1, { message: "Symbol is required" }),
+  condition: z.string().min(1, { message: "Condition is required" }),
+  quantity: z.string().min(1, { message: "Quantity is required" }),
+  risk: z.string().min(1, { message: "Risk is required" }),
 });
 
 interface Strategy {
@@ -23,20 +31,25 @@ interface Strategy {
 }
 
 interface StrategyFormProps {
-  addStrategy: (strategy: Omit<Strategy, 'id'>) => void;
+  addStrategy: (strategy: Omit<Strategy, "id">) => void;
   editing: Strategy | null;
   updateStrategy: (strategy: Strategy) => void;
   setEditing: (strategy: Strategy | null) => void;
 }
 
-const StrategyForm: React.FC<StrategyFormProps> = ({ addStrategy, editing, updateStrategy, setEditing }) => {
+const StrategyForm: React.FC<StrategyFormProps> = ({
+  addStrategy,
+  editing,
+  updateStrategy,
+  setEditing,
+}) => {
   const form = useForm<z.infer<typeof strategySchema>>({
     resolver: zodResolver(strategySchema),
     defaultValues: {
-      symbol: '',
-      condition: '',
-      quantity: '',
-      risk: '',
+      symbol: "",
+      condition: "",
+      quantity: "",
+      risk: "",
     },
   });
 
@@ -45,10 +58,10 @@ const StrategyForm: React.FC<StrategyFormProps> = ({ addStrategy, editing, updat
       form.reset(editing);
     } else {
       form.reset({
-        symbol: '',
-        condition: '',
-        quantity: '',
-        risk: '',
+        symbol: "",
+        condition: "",
+        quantity: "",
+        risk: "",
       });
     }
   }, [editing, form]);
@@ -65,7 +78,7 @@ const StrategyForm: React.FC<StrategyFormProps> = ({ addStrategy, editing, updat
   return (
     <Card>
       <CardHeader>
-        <CardTitle>{editing ? 'Edit Strategy' : 'Add Strategy'}</CardTitle>
+        <CardTitle>{editing ? "Edit Strategy" : "Add Strategy"}</CardTitle>
       </CardHeader>
       <CardContent>
         <Form {...form}>
@@ -105,10 +118,14 @@ const StrategyForm: React.FC<StrategyFormProps> = ({ addStrategy, editing, updat
                 <FormItem>
                   <FormLabel>Entry/Exit Condition (JSON)</FormLabel>
                   <FormControl>
-                    <Input placeholder='e.g. {"type": "indicator", "name": "SMA", "period": 14}' {...field} />
+                    <Input
+                      placeholder='e.g. {"type": "indicator", "name": "SMA", "period": 14}'
+                      {...field}
+                    />
                   </FormControl>
                   <FormDescription>
-                    This is the JSON logic for your strategy's entry and exit conditions.
+                    This is the JSON logic for your strategy's entry and exit
+                    conditions.
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
@@ -129,10 +146,14 @@ const StrategyForm: React.FC<StrategyFormProps> = ({ addStrategy, editing, updat
             />
             <div className="flex space-x-2">
               <Button type="submit" className="hover:scale-105">
-                {editing ? 'Update Strategy' : 'Add Strategy'}
+                {editing ? "Update Strategy" : "Add Strategy"}
               </Button>
               {editing && (
-                <Button variant="ghost" onClick={() => setEditing(null)} className="hover:scale-105">
+                <Button
+                  variant="ghost"
+                  onClick={() => setEditing(null)}
+                  className="hover:scale-105"
+                >
                   Cancel
                 </Button>
               )}

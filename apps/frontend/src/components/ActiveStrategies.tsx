@@ -1,6 +1,6 @@
-import React from 'react';
-import type { Strategy } from '../services/api';
-import { Card, CardContent, CardHeader, CardTitle } from './ui/Card';
+import React from "react";
+import type { Strategy } from "../services/api";
+import { Card, CardContent, CardHeader, CardTitle } from "./ui/Card";
 
 interface Props {
   strategies: Strategy[];

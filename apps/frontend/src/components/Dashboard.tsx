@@ -1,22 +1,34 @@
-import React, { useState, useEffect } from 'react';
-import { getActiveStrategies, getRecentTrades, getTotalPnl, getOpenPositions, setDhanAccessToken } from '../services/api';
-import type { Strategy, Trade, Pnl, Position } from '../services/api';
-import Chart from './Chart';
-import ActiveStrategies from './ActiveStrategies';
-import RecentTrades from './RecentTrades';
-import PnlComponent from './Pnl';
-import OpenPositions from './OpenPositions';
-import { Button } from './ui/Button';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/Select';
-import { Card } from './ui/Card';
+import React, { useState, useEffect } from "react";
+import {
+  getActiveStrategies,
+  getRecentTrades,
+  getTotalPnl,
+  getOpenPositions,
+  setDhanAccessToken,
+} from "../services/api";
+import type { Strategy, Trade, Pnl, Position } from "../services/api";
+import Chart from "./Chart";
+import ActiveStrategies from "./ActiveStrategies";
+import RecentTrades from "./RecentTrades";
+import PnlComponent from "./Pnl";
+import OpenPositions from "./OpenPositions";
+import { Button } from "./ui/Button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "./ui/Select";
+import { Card } from "./ui/Card";
 
 const Dashboard: React.FC = () => {
   const [strategies, setStrategies] = useState<Strategy[]>([]);
   const [trades, setTrades] = useState<Trade[]>([]);
   const [pnl, setPnl] = useState<Pnl | null>(null);
   const [positions, setPositions] = useState<Position[]>([]);
-  const [symbolFilter, setSymbolFilter] = useState('');
-  const [dateFilter, setDateFilter] = useState('');
+  const [symbolFilter, setSymbolFilter] = useState("");
+  const [dateFilter, setDateFilter] = useState("");
 
   useEffect(() => {
     fetchData();
@@ -24,18 +36,19 @@ const Dashboard: React.FC = () => {
 
   const fetchData = async () => {
     try {
-      const [strategiesData, tradesData, pnlData, positionsData] = await Promise.all([
-        getActiveStrategies(),
-        getRecentTrades(symbolFilter, dateFilter),
-        getTotalPnl(),
-        getOpenPositions(symbolFilter),
-      ]);
+      const [strategiesData, tradesData, pnlData, positionsData] =
+        await Promise.all([
+          getActiveStrategies(),
+          getRecentTrades(symbolFilter, dateFilter),
+          getTotalPnl(),
+          getOpenPositions(symbolFilter),
+        ]);
       setStrategies(strategiesData);
       setTrades(tradesData);
       setPnl(pnlData);
       setPositions(positionsData);
     } catch (error) {
-      console.error('Error fetching data:', error);
+      console.error("Error fetching data:", error);
     }
   };
 
@@ -45,11 +58,11 @@ const Dashboard: React.FC = () => {
 
   const handleSetToken = async () => {
     try {
-      await setDhanAccessToken({ accessToken: 'my-dummy-token' });
-      alert('Dhan token set successfully!');
+      await setDhanAccessToken({ accessToken: "my-dummy-token" });
+      alert("Dhan token set successfully!");
     } catch (error) {
-      console.error('Error setting Dhan token:', error);
-      alert('Failed to set Dhan token.');
+      console.error("Error setting Dhan token:", error);
+      alert("Failed to set Dhan token.");
     }
   };
 

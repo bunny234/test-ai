@@ -1,6 +1,6 @@
-import axios from 'axios';
+import axios from "axios";
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '/api';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "/api";
 
 // Define interfaces for the data
 export interface Strategy {
@@ -34,8 +34,13 @@ export const getActiveStrategies = async (): Promise<Strategy[]> => {
   return response.data;
 };
 
-export const getRecentTrades = async (symbol?: string, date?: string): Promise<Trade[]> => {
-  const response = await axios.get(`${API_BASE_URL}/trades`, { params: { symbol, date } });
+export const getRecentTrades = async (
+  symbol?: string,
+  date?: string,
+): Promise<Trade[]> => {
+  const response = await axios.get(`${API_BASE_URL}/trades`, {
+    params: { symbol, date },
+  });
   return response.data;
 };
 
@@ -44,14 +49,24 @@ export const getTotalPnl = async (): Promise<Pnl> => {
   return response.data;
 };
 
-import { type ModifyOrderDto, type PlaceOrderDto, type SetDhanTokenDto } from './dhan.interfaces';
+import {
+  type ModifyOrderDto,
+  type PlaceOrderDto,
+  type SetDhanTokenDto,
+} from "./dhan.interfaces";
 
-export const getOpenPositions = async (symbol?: string): Promise<Position[]> => {
-  const response = await axios.get(`${API_BASE_URL}/positions`, { params: { symbol } });
+export const getOpenPositions = async (
+  symbol?: string,
+): Promise<Position[]> => {
+  const response = await axios.get(`${API_BASE_URL}/positions`, {
+    params: { symbol },
+  });
   return response.data;
 };
 
-export const setDhanAccessToken = async (data: SetDhanTokenDto): Promise<any> => {
+export const setDhanAccessToken = async (
+  data: SetDhanTokenDto,
+): Promise<any> => {
   const response = await axios.post(`${API_BASE_URL}/dhan/set-token`, data);
   return response.data;
 };
@@ -61,7 +76,10 @@ export const placeOrder = async (data: PlaceOrderDto): Promise<any> => {
   return response.data;
 };
 
-export const modifyOrder = async (id: string, data: ModifyOrderDto): Promise<any> => {
+export const modifyOrder = async (
+  id: string,
+  data: ModifyOrderDto,
+): Promise<any> => {
   const response = await axios.patch(`${API_BASE_URL}/dhan/orders/${id}`, data);
   return response.data;
 };
