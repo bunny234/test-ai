@@ -1,4 +1,13 @@
 import React from 'react';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/Table";
+import { Button } from './ui/Button';
 
 interface Strategy {
   id?: number;
@@ -16,20 +25,34 @@ interface StrategyListProps {
 
 const StrategyList: React.FC<StrategyListProps> = ({ strategies, deleteStrategy, editStrategy }) => {
   return (
-    <div>
-      <h2>Strategies</h2>
-      <ul>
-        {strategies.map(strategy => (
-          <li key={strategy.id}>
-            <p><strong>Symbol:</strong> {strategy.symbol}</p>
-            <p><strong>Condition:</strong> {strategy.condition}</p>
-            <p><strong>Quantity:</strong> {strategy.quantity}</p>
-            <p><strong>Risk Limit:</strong> {strategy.risk}</p>
-            <button onClick={() => editStrategy(strategy)}>Edit</button>
-            <button onClick={() => strategy.id && deleteStrategy(strategy.id)}>Delete</button>
-          </li>
-        ))}
-      </ul>
+    <div className="rounded-md border">
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead>Symbol</TableHead>
+            <TableHead>Condition</TableHead>
+            <TableHead>Quantity</TableHead>
+            <TableHead>Risk Limit</TableHead>
+            <TableHead>Actions</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {strategies.map(strategy => (
+            <TableRow key={strategy.id}>
+              <TableCell>{strategy.symbol}</TableCell>
+              <TableCell>{strategy.condition}</TableCell>
+              <TableCell>{strategy.quantity}</TableCell>
+              <TableCell>{strategy.risk}</TableCell>
+              <TableCell>
+                <div className="flex space-x-2">
+                  <Button variant="outline" size="sm" onClick={() => editStrategy(strategy)}>Edit</Button>
+                  <Button variant="destructive" size="sm" onClick={() => strategy.id && deleteStrategy(strategy.id)}>Delete</Button>
+                </div>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
     </div>
   );
 };

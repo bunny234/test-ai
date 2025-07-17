@@ -1,5 +1,7 @@
 import React from 'react';
 import type { Trade } from '../services/api';
+import { Card, CardContent, CardHeader, CardTitle } from './ui/Card';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from './ui/Table';
 
 interface Props {
   trades: Trade[];
@@ -7,29 +9,33 @@ interface Props {
 
 const RecentTrades: React.FC<Props> = ({ trades }) => {
   return (
-    <div>
-      <h3>Recent Trades</h3>
-      <table>
-        <thead>
-          <tr>
-            <th>Symbol</th>
-            <th>Quantity</th>
-            <th>Price</th>
-            <th>Timestamp</th>
-          </tr>
-        </thead>
-        <tbody>
-          {trades.map((trade) => (
-            <tr key={trade.id}>
-              <td>{trade.symbol}</td>
-              <td>{trade.quantity}</td>
-              <td>{trade.price}</td>
-              <td>{new Date(trade.timestamp).toLocaleString()}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+    <Card>
+      <CardHeader>
+        <CardTitle>Recent Trades</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Symbol</TableHead>
+              <TableHead>Quantity</TableHead>
+              <TableHead>Price</TableHead>
+              <TableHead>Timestamp</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {trades.map((trade) => (
+              <tr key={trade.id}>
+                <TableCell>{trade.symbol}</TableCell>
+                <TableCell>{trade.quantity}</TableCell>
+                <TableCell>{trade.price}</TableCell>
+                <TableCell>{new Date(trade.timestamp).toLocaleString()}</TableCell>
+              </tr>
+            ))}
+          </TableBody>
+        </Table>
+      </CardContent>
+    </Card>
   );
 };
 

@@ -25,7 +25,13 @@
     "types": [
       "react",
       "react-dom"
-    ]
+    ],
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ]
+    }
   },
   "include": [
     "src",

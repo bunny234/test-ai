@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Login from './components/Login';
 import Signup from './components/Signup';
 import Dashboard from './components/Dashboard';
 import ProtectedRoute from './components/ProtectedRoute';
 import StrategyForm from './components/StrategyForm';
 import StrategyList from './components/StrategyList';
+import Layout from './components/Layout';
 import './App.css';
 
 interface Strategy {
@@ -40,20 +41,7 @@ const App: React.FC = () => {
 
   return (
     <Router>
-      <div>
-        <nav>
-          <ul>
-            <li>
-              <Link to="/login">Login</Link>
-            </li>
-            <li>
-              <Link to="/signup">Signup</Link>
-            </li>
-            <li>
-              <Link to="/strategies">Strategies</Link>
-            </li>
-          </ul>
-        </nav>
+      <Layout>
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
@@ -69,7 +57,7 @@ const App: React.FC = () => {
             path="/strategies"
             element={
               <ProtectedRoute>
-                <>
+                <div className="container mx-auto p-4">
                   <StrategyList strategies={strategies} deleteStrategy={deleteStrategy} editStrategy={editStrategy} />
                   <StrategyForm
                     addStrategy={addStrategy}
@@ -77,12 +65,12 @@ const App: React.FC = () => {
                     updateStrategy={updateStrategy}
                     setEditing={setEditing}
                   />
-                </>
+                </div>
               </ProtectedRoute>
             }
           />
         </Routes>
-      </div>
+      </Layout>
     </Router>
   );
 };
