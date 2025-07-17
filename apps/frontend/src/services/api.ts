@@ -44,7 +44,7 @@ export const getTotalPnl = async (): Promise<Pnl> => {
   return response.data;
 };
 
-import { SetDhanTokenDto, PlaceOrderDto, ModifyOrderDto } from './dhan.interfaces';
+import { type ModifyOrderDto, type PlaceOrderDto, type SetDhanTokenDto } from './dhan.interfaces';
 
 export const getOpenPositions = async (symbol?: string): Promise<Position[]> => {
   const response = await axios.get(`${API_BASE_URL}/positions`, { params: { symbol } });
