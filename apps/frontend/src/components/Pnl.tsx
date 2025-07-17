@@ -1,5 +1,6 @@
 import React from 'react';
 import type { Pnl } from '../services/api';
+import { Card, CardContent, CardHeader, CardTitle } from './ui/Card';
 
 interface Props {
   pnl: Pnl | null;
@@ -7,10 +8,14 @@ interface Props {
 
 const PnlComponent: React.FC<Props> = ({ pnl }) => {
   return (
-    <div>
-      <h3>Total PnL</h3>
-      <p>{pnl ? `$${pnl.totalPnl.toFixed(2)}` : 'Loading...'}</p>
-    </div>
+    <Card>
+      <CardHeader>
+        <CardTitle>Total PnL</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <p className="text-2xl font-bold">{pnl ? `$${pnl.totalPnl.toFixed(2)}` : 'Loading...'}</p>
+      </CardContent>
+    </Card>
   );
 };
 

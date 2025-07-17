@@ -1,5 +1,7 @@
 import React from 'react';
 import type { Position } from '../services/api';
+import { Card, CardContent, CardHeader, CardTitle } from './ui/Card';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from './ui/Table';
 
 interface Props {
   positions: Position[];
@@ -7,27 +9,31 @@ interface Props {
 
 const OpenPositions: React.FC<Props> = ({ positions }) => {
   return (
-    <div>
-      <h3>Open Positions</h3>
-      <table>
-        <thead>
-          <tr>
-            <th>Symbol</th>
-            <th>Quantity</th>
-            <th>Average Price</th>
-          </tr>
-        </thead>
-        <tbody>
-          {positions.map((position) => (
-            <tr key={position.id}>
-              <td>{position.symbol}</td>
-              <td>{position.quantity}</td>
-              <td>{position.averagePrice}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+    <Card>
+      <CardHeader>
+        <CardTitle>Open Positions</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Symbol</TableHead>
+              <TableHead>Quantity</TableHead>
+              <TableHead>Average Price</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {positions.map((position) => (
+              <tr key={position.id}>
+                <TableCell>{position.symbol}</TableCell>
+                <TableCell>{position.quantity}</TableCell>
+                <TableCell>{position.averagePrice}</TableCell>
+              </tr>
+            ))}
+          </TableBody>
+        </Table>
+      </CardContent>
+    </Card>
   );
 };
 
