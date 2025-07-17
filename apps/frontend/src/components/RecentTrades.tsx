@@ -25,12 +25,12 @@ const RecentTrades: React.FC<Props> = ({ trades }) => {
           </TableHeader>
           <TableBody>
             {trades.map((trade) => (
-              <tr key={trade.id}>
+              <TableRow key={trade.id}>
                 <TableCell>{trade.symbol}</TableCell>
                 <TableCell>{trade.quantity}</TableCell>
                 <TableCell>{trade.price}</TableCell>
                 <TableCell>{new Date(trade.timestamp).toLocaleString()}</TableCell>
-              </tr>
+              </TableRow>
             ))}
           </TableBody>
         </Table>

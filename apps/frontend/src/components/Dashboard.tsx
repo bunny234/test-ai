@@ -6,7 +6,9 @@ import ActiveStrategies from './ActiveStrategies';
 import RecentTrades from './RecentTrades';
 import PnlComponent from './Pnl';
 import OpenPositions from './OpenPositions';
-import './Dashboard.css';
+import { Button } from './ui/Button';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/Select';
+import { Card } from './ui/Card';
 
 const Dashboard: React.FC = () => {
   const [strategies, setStrategies] = useState<Strategy[]>([]);
@@ -52,30 +54,46 @@ const Dashboard: React.FC = () => {
   };
 
   return (
-    <div>
-      <h2>Dashboard</h2>
-      <button onClick={handleSetToken}>Set Dhan Token</button>
-      <div>
-        <input
-          type="text"
-          placeholder="Symbol"
-          value={symbolFilter}
-          onChange={(e) => setSymbolFilter(e.target.value)}
-        />
+    <div className="p-4 space-y-4">
+      <div className="flex justify-between items-center">
+        <h2 className="text-3xl font-bold">Dashboard</h2>
+        <Button onClick={handleSetToken}>Set Dhan Token</Button>
+      </div>
+      <div className="flex space-x-4">
+        <Select onValueChange={setSymbolFilter}>
+          <SelectTrigger className="w-[180px]">
+            <SelectValue placeholder="Symbol" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="NIFTY">NIFTY</SelectItem>
+            <SelectItem value="BANKNIFTY">BANKNIFTY</SelectItem>
+          </SelectContent>
+        </Select>
         <input
           type="date"
           value={dateFilter}
           onChange={(e) => setDateFilter(e.target.value)}
+          className="p-2 border rounded-md"
         />
-        <button onClick={handleFilterChange}>Filter</button>
+        <Button onClick={handleFilterChange}>Filter</Button>
       </div>
-      <div className="dashboard-grid">
-        <ActiveStrategies strategies={strategies} />
-        <RecentTrades trades={trades} />
-        <PnlComponent pnl={pnl} />
-        <OpenPositions positions={positions} />
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <Card className="hover:shadow-lg transition-shadow">
+          <ActiveStrategies strategies={strategies} />
+        </Card>
+        <Card className="hover:shadow-lg transition-shadow">
+          <RecentTrades trades={trades} />
+        </Card>
+        <Card className="hover:shadow-lg transition-shadow">
+          <PnlComponent pnl={pnl} />
+        </Card>
+        <Card className="hover:shadow-lg transition-shadow col-span-1 md:col-span-2 lg:col-span-3">
+          <OpenPositions positions={positions} />
+        </Card>
+        <Card className="hover:shadow-lg transition-shadow col-span-1 md:col-span-2 lg:col-span-3">
+          <Chart />
+        </Card>
       </div>
-      <Chart />
     </div>
   );
 };

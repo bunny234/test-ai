@@ -1,5 +1,5 @@
 import animate from "tailwindcss-animate"
-import fontFamily from "tailwindcss/defaultTheme"
+import { fontFamily } from "tailwindcss/defaultTheme"
 
 /** @type {import('tailwindcss').Config} */
 const config = {
@@ -56,6 +56,8 @@ const config = {
         },
         success: "#10B981",
         error: "#EF4444",
+        primary_blue: "#2563EB",
+        background_dark: "#1F2A44",
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -63,7 +65,7 @@ const config = {
         sm: "calc(var(--radius) - 4px)",
       },
       fontFamily: {
-        sans: ["var(--font-sans)", ...fontFamily.sans],
+        sans: ["Inter", ...fontFamily.sans],
       },
       keyframes: {
         "accordion-down": {

@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
 import ApexCharts from 'apexcharts';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
+import { Skeleton } from '@/components/ui/Skeleton';
 
 interface ChartProps {
   // Define props here
@@ -8,12 +10,14 @@ interface ChartProps {
 
 const Chart: React.FC<ChartProps> = () => {
   const [data, setData] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const ws = new WebSocket('ws://localhost:8080');
 
     ws.onopen = () => {
       console.log('connected');
+      setLoading(false);
     };
 
     ws.onmessage = (event) => {
@@ -25,10 +29,10 @@ const Chart: React.FC<ChartProps> = () => {
           x: new Date(message.x).getTime(),
           y: message.y,
           label: {
-            borderColor: message.type === 'entry' ? '#00E396' : '#FF4560',
+            borderColor: message.type === 'entry' ? '#2563EB' : '#10B981',
             style: {
               color: '#fff',
-              background: message.type === 'entry' ? '#00E396' : '#FF4560',
+              background: message.type === 'entry' ? '#2563EB' : '#10B981',
             },
             text: message.type === 'entry' ? 'Buy' : 'Sell',
           }
@@ -91,6 +95,16 @@ const Chart: React.FC<ChartProps> = () => {
     legend: {
       show: false
     },
+    theme: {
+      mode: document.documentElement.classList.contains('dark') ? 'dark' : 'light',
+      palette: 'palette1',
+      monochrome: {
+        enabled: true,
+        color: '#2563EB',
+        shadeTo: 'light',
+        shadeIntensity: 0.65
+      },
+    }
   };
 
   const series = [{
@@ -98,7 +112,18 @@ const Chart: React.FC<ChartProps> = () => {
   }];
 
   return (
-    <ReactApexChart options={options} series={series} type="line" height={350} />
+    <Card>
+      <CardHeader>
+        <CardTitle>Real-Time Chart</CardTitle>
+      </CardHeader>
+      <CardContent>
+        {loading ? (
+          <Skeleton className="h-[350px] w-full" />
+        ) : (
+          <ReactApexChart options={options} series={series} type="line" height={350} />
+        )}
+      </CardContent>
+    </Card>
   );
 };
 

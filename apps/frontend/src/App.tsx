@@ -7,6 +7,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import StrategyForm from './components/StrategyForm';
 import StrategyList from './components/StrategyList';
 import Layout from './components/Layout';
+import { ThemeProvider } from './components/ThemeProvider';
 import './App.css';
 
 interface Strategy {
@@ -40,38 +41,40 @@ const App: React.FC = () => {
   };
 
   return (
-    <Router>
-      <Layout>
-        <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route
-            path="/dashboard"
-            element={
-              <ProtectedRoute>
-                <Dashboard />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/strategies"
-            element={
-              <ProtectedRoute>
-                <div className="container mx-auto p-4">
-                  <StrategyList strategies={strategies} deleteStrategy={deleteStrategy} editStrategy={editStrategy} />
-                  <StrategyForm
-                    addStrategy={addStrategy}
-                    editing={editing}
-                    updateStrategy={updateStrategy}
-                    setEditing={setEditing}
-                  />
-                </div>
-              </ProtectedRoute>
-            }
-          />
-        </Routes>
-      </Layout>
-    </Router>
+    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+      <Router>
+        <Layout>
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route
+              path="/dashboard"
+              element={
+                <ProtectedRoute>
+                  <Dashboard />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/strategies"
+              element={
+                <ProtectedRoute>
+                  <div className="container mx-auto p-4">
+                    <StrategyList strategies={strategies} deleteStrategy={deleteStrategy} editStrategy={editStrategy} />
+                    <StrategyForm
+                      addStrategy={addStrategy}
+                      editing={editing}
+                      updateStrategy={updateStrategy}
+                      setEditing={setEditing}
+                    />
+                  </div>
+                </ProtectedRoute>
+              }
+            />
+          </Routes>
+        </Layout>
+      </Router>
+    </ThemeProvider>
   );
 };
 

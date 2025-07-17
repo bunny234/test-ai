@@ -24,11 +24,11 @@ const OpenPositions: React.FC<Props> = ({ positions }) => {
           </TableHeader>
           <TableBody>
             {positions.map((position) => (
-              <tr key={position.id}>
+              <TableRow key={position.id}>
                 <TableCell>{position.symbol}</TableCell>
                 <TableCell>{position.quantity}</TableCell>
                 <TableCell>{position.averagePrice}</TableCell>
-              </tr>
+              </TableRow>
             ))}
           </TableBody>
         </Table>
