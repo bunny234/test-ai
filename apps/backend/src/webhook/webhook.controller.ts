@@ -12,7 +12,7 @@ import { WebhookService } from './webhook.service';
 export class WebhookController {
   constructor(private readonly webhookService: WebhookService) {}
 
-  @Throttle(10, 60)
+  @Throttle({ default: { limit: 10, ttl: 60000 } })
   @Post('tradingview')
   @HttpCode(200)
   async handleTradingViewWebhook(@Body() payload: any) {

@@ -22,10 +22,12 @@ import { WebhookModule } from './webhook/webhook.module';
 @Module({
   imports: [
     BacktestModule,
-    ThrottlerModule.forRoot({
-      ttl: 60,
-      limit: 10,
-    }),
+    ThrottlerModule.forRoot([
+      {
+        ttl: 60000,
+        limit: 10,
+      },
+    ]),
     BullModule.forRoot({
       connection: {
         host: 'localhost',

@@ -22,7 +22,7 @@ import { StrategyService } from './strategy.service';
 export class StrategyController {
   constructor(private readonly strategyService: StrategyService) {}
 
-  @Throttle(10, 60)
+  @Throttle({ default: { limit: 10, ttl: 60000 } })
   @Post()
   create(@Body() createStrategyDto: CreateStrategyDto, @Request() req) {
     return this.strategyService.create(createStrategyDto, req.user as User);
@@ -42,7 +42,7 @@ export class StrategyController {
     return strategy;
   }
 
-  @Throttle(10, 60)
+  @Throttle({ default: { limit: 10, ttl: 60000 } })
   @Patch(':id')
   async update(
     @Param('id') id: string,
