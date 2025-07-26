@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   Table,
   TableBody,
@@ -7,7 +7,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/Table";
-import { Button } from "./ui/Button";
+import { Button } from './ui/Button';
 
 interface Strategy {
   id?: number;
@@ -23,11 +23,7 @@ interface StrategyListProps {
   editStrategy: (strategy: Strategy) => void;
 }
 
-const StrategyList: React.FC<StrategyListProps> = ({
-  strategies,
-  deleteStrategy,
-  editStrategy,
-}) => {
+const StrategyList: React.FC<StrategyListProps> = ({ strategies, deleteStrategy, editStrategy }) => {
   return (
     <div className="rounded-md border">
       <Table>
@@ -41,7 +37,7 @@ const StrategyList: React.FC<StrategyListProps> = ({
           </TableRow>
         </TableHeader>
         <TableBody>
-          {strategies.map((strategy) => (
+          {strategies.map(strategy => (
             <TableRow key={strategy.id}>
               <TableCell>{strategy.symbol}</TableCell>
               <TableCell>{strategy.condition}</TableCell>
@@ -49,20 +45,8 @@ const StrategyList: React.FC<StrategyListProps> = ({
               <TableCell>{strategy.risk}</TableCell>
               <TableCell>
                 <div className="flex space-x-2">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => editStrategy(strategy)}
-                  >
-                    Edit
-                  </Button>
-                  <Button
-                    variant="destructive"
-                    size="sm"
-                    onClick={() => strategy.id && deleteStrategy(strategy.id)}
-                  >
-                    Delete
-                  </Button>
+                  <Button variant="outline" size="sm" onClick={() => editStrategy(strategy)}>Edit</Button>
+                  <Button variant="destructive" size="sm" onClick={() => strategy.id && deleteStrategy(strategy.id)}>Delete</Button>
                 </div>
               </TableCell>
             </TableRow>

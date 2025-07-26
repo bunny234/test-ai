@@ -1,14 +1,7 @@
-import React from "react";
-import type { Position } from "../services/api";
-import { Card, CardContent, CardHeader, CardTitle } from "./ui/Card";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "./ui/Table";
+import React from 'react';
+import type { Position } from '../services/api';
+import { Card, CardContent, CardHeader, CardTitle } from './ui/Card';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from './ui/Table';
 
 interface Props {
   positions: Position[];

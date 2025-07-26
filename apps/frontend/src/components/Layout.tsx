@@ -1,6 +1,6 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { ModeToggle } from "./ModeToggle";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { ModeToggle } from './ModeToggle';
 
 const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
