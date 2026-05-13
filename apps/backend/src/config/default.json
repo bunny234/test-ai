@@ -1,0 +1,5 @@
+{
+  "webhook": {
+    "secret": "your-secret-token"
+  }
+}
